@@ -10,12 +10,29 @@ public class AuthController : ControllerBase
 {
     private readonly IConfiguration _config;
 
+    /// <summary>
+    /// Controller responsável pela autenticação e geração de tokens JWT.
+    /// </summary>
+    /// <param name="config">Configurações da aplicação (JWT)</param>
+
     public AuthController(IConfiguration config)
     {
         _config = config;
     }
 
+    /// <summary>
+    /// Realiza o login do usuário e gera um token JWT.
+    /// </summary>
+    /// <remarks>
+    /// Este endpoint gera um token JWT contendo as claims básicas do usuário,
+    /// que deverá ser utilizado no header Authorization como:
+    /// Bearer {token}
+    /// </remarks>
+    /// <response code="200">Token JWT gerado com sucesso</response>
+    /// <response code="401">Credenciais inválidas</response>
     [HttpPost("login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public IActionResult Login()
     {
         var claims = new[]

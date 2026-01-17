@@ -7,6 +7,9 @@ using visualAPI.Entities;
 
 namespace visualAPI.Controllers
 {
+    /// <summary>
+    /// Gerencia operações relacionadas a pessoas
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class PessoaController : ControllerBase
@@ -16,7 +19,16 @@ namespace visualAPI.Controllers
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Retorna todas as pessoas cadastradas
+        /// </summary>
+        /// <remarks>
+        /// Retorna também os dados da conta associada.
+        /// </remarks>
+        /// <response code="200">Lista de pessoas retornada com sucesso</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
             var pessoas = await _context.Pessoas
@@ -35,8 +47,14 @@ namespace visualAPI.Controllers
 
             return Ok(pessoas);
         }
-
+        /// <summary>
+        /// Encontra uma pessoa pelo id
+        /// </summary>
+        /// <response code="201">Pessoa encontrada com sucesso</response>
+        /// <response code="404">pessoa não encontrada</response>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(Guid id)
         {
             var pessoa = await _context.Pessoas
@@ -58,9 +76,15 @@ namespace visualAPI.Controllers
 
             return Ok(pessoa);
         }
-
+        /// <summary>
+        /// Cadastra uma nova pessoa
+        /// </summary>
+        /// <response code="201">Pessoa criada com sucesso</response>
+        /// <response code="400">Dados inválidos</response>
         [Authorize]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(PessoaCreateDTO dto)
         {
             var pessoa = new Pessoa
@@ -79,9 +103,19 @@ namespace visualAPI.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = pessoa.Id }, pessoa.Id);
         }
-
+        /// <summary>
+        /// Atualiza parcialmente os dados de uma pessoa
+        /// </summary>
+        /// <param name="id">ID da pessoa</param>
+        /// <remarks>
+        /// Apenas os campos enviados serão atualizados.
+        /// </remarks>
+        /// <response code="204">Atualização realizada com sucesso</response>
+        /// <response code="404">Pessoa não encontrada</response>
         [Authorize]
         [HttpPatch("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Patch(Guid id, PessoaPatchDTO dto)
         {
             var pessoa = await _context.Pessoas.FindAsync(id);
@@ -94,8 +128,20 @@ namespace visualAPI.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        /// <summary>
+        /// Remove uma pessoa do sistema
+        /// </summary>
+        /// Endpoint protegido por autenticação JWT.
+        /// <param name="id">ID da pessoa</param>
+        /// <response code="200">Pessoa removida com sucesso</response>
+        /// <response code="404">Pessoa não encontrada</response>
+        /// /// <response code="401">Usuário não autenticado</response>
         [Authorize]
         [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Delete(Guid id)
         {
             var pessoa = await _context.Pessoas.FindAsync(id);

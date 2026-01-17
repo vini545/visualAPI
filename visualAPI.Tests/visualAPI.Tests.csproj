@@ -9,9 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<None Update="xunit.runner.json">
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	</None>
 	<ProjectReference Include="..\visualAPI\visualAPI.csproj" />
 	<Content Include="..\visualAPI\bin\Debug\net9.0\**\*">
 		<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
