@@ -10,5 +10,17 @@ namespace visualAPI.data
             : base(options) { }
 
         public DbSet<Pessoa> Pessoas => Set<Pessoa>();
+
+        public DbSet<Conta> Contas => Set<Conta>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pessoa>()
+                .HasOne(p => p.Conta)
+                .WithOne(c => c.Pessoa)
+                .HasForeignKey<Conta>(c => c.PessoaId);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
