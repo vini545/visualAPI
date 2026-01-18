@@ -38,14 +38,14 @@ substitua SUA_SENHA_AQUI e SUA_CHAVE_SECRETA pelos valores corretos antes de rod
 Rodar com Docker Compose:
     docker-compose up --build
 
-A API estará disponível em: https://localhost:7234
+A API estará disponível em: http://localhost:8080
 
 -- Testes --
     No terminal, dentro da pasta do projeto de testes (visualAPI.Tests):
         dotnet test
 
 API já vem com Swagger configurado. Para testar:
-        https://localhost:7234/swagger/index.html
+        http://localhost:8080/swagger/index.html
 
 
 Para endpoints protegidos por JWT:
