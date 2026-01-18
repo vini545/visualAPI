@@ -22,7 +22,7 @@ git clone https://github.com/vini545/visualAPI.git
 cd visualAPI
 
 
-No arquivo appsettings.json ou via variáveis de ambiente:
+Antes de rodar a aplicação, configure as seguintes variáveis no `appsettings.json` ou via variáveis de ambiente:
 "ConnectionStrings": {
   "DefaultConnection": "Host=localhost;Port=5432;Database=visualAPIDB;Username=postgres;Password=SUA_SENHA_AQUI"
 },
@@ -38,14 +38,18 @@ substitua SUA_SENHA_AQUI e SUA_CHAVE_SECRETA pelos valores corretos antes de rod
 Rodar com Docker Compose:
     docker-compose up --build
 
-A API estará disponível em: https://localhost:7234
+A API estará disponível em: http://localhost:8080
 
 -- Testes --
     No terminal, dentro da pasta do projeto de testes (visualAPI.Tests):
         dotnet test
 
 API já vem com Swagger configurado. Para testar:
-        https://localhost:7234/swagger/index.html
+        http://localhost:8080/swagger/index.html
+
+Para logar utilizar ou criar um usuario novo
+Password = "senha123",
+UserName = "visualAPI"
 
 
 Para endpoints protegidos por JWT:
