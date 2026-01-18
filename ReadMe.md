@@ -46,10 +46,11 @@ A API estará disponível em: http://localhost:8080
 
 API já vem com Swagger configurado. Para testar:
         http://localhost:8080/swagger/index.html
-
+        
 Para logar utilizar ou criar um usuario novo
 Password = "senha123",
 UserName = "visualAPI"
+
 
 
 Para endpoints protegidos por JWT:
